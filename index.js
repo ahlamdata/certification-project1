@@ -1,5 +1,5 @@
 console.log('Starting point for Certification Project I')
-
+const prompt = require('prompt-sync')();
 let quoteManager = [
     {id:0, name:"Inspirational Quotes", quotes:[{quote:"The only way to do great work is to love what you do.", author:"Steve Jobs", category:"inspirational"}, 
                                                 {quote:"Believe you can and you're halfway there.", author:"Theodore Roosevelt", category:"inspirational"}
@@ -28,39 +28,37 @@ let quoteManager = [
 ]}   
 ]
 
+// // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// // QUOTE LIST ZONE:
+// // ***updating QuoteList***
+// let updateQuoteArray = function(){
+//     let newName = prompt("Enter your prefered name: "); //user will enter their prefered name to change the existing name
+//     let selectedId = Number(prompt("Enter the id number(0-4) of the quote name you wish to change: "))// let user enter the id number they want to delete from
+//     quoteManager.forEach(quoteList =>{
+//         if (quoteList.id === selectedId){
+//             quoteList.name = newName;
+//     } 
+// })
+// }
 
-// Declaring key variables
-let iq = Number;
-let quote = "";
-let author = ""
-let category = ""
-id = function() {
-    for (let i=0; i<quoteManager.length; i++){
-        id = quoteManager[i];
-    }; //id number, define a for loop for id and make it a function
-} 
-let name = "string"   //prefer quotelist name
-let quotes = [{quote, author,category},
-              {quote, author,category},
-              {quote, author,category}] // details of quotes(quote, author, category)
+// // // ***deleting QuoteList***
+// let deleteQuoteList = function(id) {
+//     if (id >= 0 && id < quoteManager.length) { // Check if the id is within the valid range
+//         quoteManager.splice(id, 1); // Remove 1 element at index id
+//     } else {
+//         console.log("Invalid id specified."); // Provide feedback for invalid id
+//     }
+// }
 
-// create quoteList and quotes
-quoteManager.push({
-    id, 
-    name, 
-    quotes
-});
-
-
-
-// ***deleting quoteList***
-let deleteQuoteList= function(id){
-    delete quoteManager[id]
-} 
-
-// ***deleting quotes***
-
-
+// // // ***Creating QuoteList***
+// let createQuoteList = function(){
+//     let id = Number(prompt("Enter a number greater than 4: "))
+//     quoteManager.push({
+//         id,
+//         name: "New Set of Quotes", 
+//         quotes: newQuotes // Add the new quotes to the quotes property
+//     });
+// }
 
 
 
@@ -69,37 +67,83 @@ let deleteQuoteList= function(id){
 
 
 
+// // // #######################################################################################
+// // //QUOTE ZONE:
+// // // ****ADDING A QUOTE TO QUOTES****
+// let moreQuotes = function (){
+//     let quote = prompt("Enter the quote: "); //this takes the quote
+//     let author = prompt("Enter the author: "); //this takes the author of the quote
+//     let category = prompt("Enter the category: "); //this takes the category
+//     return { quote, author, category };
+// }
+
+// let newQuotes = [] //initializing an empty array to accept the new quotes
+// //Prompt the user for new quotes and add them to the newQuotes array
+// for (let i = 0; i < 2; i++) {
+//     newQuotes.push(moreQuotes())
+// }
+
+// // ****DELETING A QUOTE FROM QUOTES****
+// // reduce function to reduce the quotes array of objects into a single object:
+// const newQuotesObject = quoteManager.reduce((mergequotes, manager) => {
+//     manager.quotes.forEach(eachquote => {
+//         mergequotes[eachquote.author] = {
+//             quote: eachquote.quote,
+//             category: eachquote.category
+//         };
+//     });
+//     return mergequotes;
+// }, {});
+// console.log(newQuotesObject)
+
+// let authorName = prompt("Enter the name of the author you will like to delete: ")
+// delete newQuotesObject[authorName];
+
+// // ****UPDATING A QUOTE CATEGORY FROM QUOTES****
+// let updateCategory = prompt("How would you categorize this quote?");
+// let keys = Object.keys(newQuotesObject);
+// for (let i = 0; i < keys.length; i++) {
+//     let author = keys[i];
+//     if (author === authorName) {
+//         newQuotesObject[author].category = updateCategory;
+//         break; // 
+//     }
+// }
+
+
+
+// ****DISPLAYING SELECTED QUOTE****
+let display = function(userInput){
+    let userInput = prompt("Enter your prefered category of quotes (inspirational, health and lifestyle, fate, influence or tech): ");
+    if (userInput == "inspirational".toLowerCase()){
+        console.log(quoteManager[0]);
+        }else if(userInput == "health and lifestyle".toLowerCase()){
+        console.log(quoteManager[1]);
+        }else if(userInput == "fate".toLowerCase()){
+        console.log(quoteManager[2]);
+        }else if(userInput == "influence".toLowerCase()){
+        console.log(quoteManager[3])
+        }else if (userInput == "tech".toLowerCase()){
+        console.log(quoteManager[4]);
+     }
+}
 
 
 
 
-
-const prompt = require('prompt-sync')();
 let viewQuoteManager = true;
 while(viewQuoteManager){
     console.log("Welcome to Quote Manager")
     console.log(quoteManager);
     let userInput = prompt("Enter your prefered category of quotes (inspirational, health and lifestyle, fate, influence or tech): ");
-    if (userInput == "inspirational".toLowerCase()){
-    console.log(quoteManager[0]);
-    }else if(userInput == "health and lifestyle".toLowerCase()){
-    console.log(quoteManager[1]);
-    }else if(userInput == "fate".toLowerCase()){
-    console.log(quoteManager[2]);
-    }else if(userInput == "influence".toLowerCase()){
-    console.log(quoteManager[3])
-    
-    }else if (userInput == "tech".toLowerCase()){
-    console.log(quoteManager[4]);
+    display(userInput);
+    console.log("You have the option to create additional quoteList and add your own quotes. Let's say its your turn.")
+    let newUserInput = prompt("Would you like to add to the quoteList, yes/no: ") //#its your turn
+    if (newUserInput === "no".toLowerCase()){
+        console.log("Well noted. Feel free to comeback and add to quoteList if you change your mind.")
+    }else if (newUserInput === "yes"){
+        createQuoteList();
     }
-
-
-    // // Adding/editing/deleting quoteList and quotes
-    // newUserInput = prompt("Would you like to add to the quoteList, yes/no: ")
-    // name = prompt("How would you name this set of quotes in the quote list?: "); // enter the name of the quote to be added in the quotelist
-    // quote = prompt("Enter your quote here: "); //prompt for adding quote to the existing quotes
-    // author = prompt("Who said this beautiful quote (first and last names of author of the quote)?: "); //author of the quote added
-    // category = prompt("How would you classify this quote?: "); // category of quote added
 
 
     const quitQuoteManager = prompt("Do you want to quit viewing QuoteManager or continue viewing more quotes (enter q to quit/or c to continue)?: ").toLowerCase();
