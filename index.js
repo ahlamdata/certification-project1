@@ -32,14 +32,39 @@ let quoteManager = [
 // // #######################################################################################
 // //QUOTE ZONE:
 // // ****ADDING A QUOTE TO QUOTES****
+// let moreQuotes = function (){
+//     let quote = prompt("Enter the quote: "); //this takes the quote
+//     let author = prompt("Enter the author: "); //this takes the author of the quote
+//     let category = prompt("Enter the category: "); //this takes the category
+//     return { quote, author, category };
+// }
+
+// let newQuotes = [] //initializing an empty array to accept the new quotes
+// newQuotes = function() {
+//     newQuotes; //Prompt the user for new quotes and add them to the newQuotes array
+//     for (let i = 0; i < 2; i++) {
+//         newQuotes.push(moreQuotes())
+//     }
+//     console.log(newQuotes);
+// }
+
 let moreQuotes = function (){
-    let quote = prompt("Enter the quote: "); //this takes the quote
-    let author = prompt("Enter the author: "); //this takes the author of the quote
-    let category = prompt("Enter the category: "); //this takes the category
+    let quote = prompt("Enter the quote: ");
+    let author = prompt("Enter the author: ");
+    let category = prompt("Enter the category: ");
     return { quote, author, category };
 }
 
-let newQuotes = [] //initializing an empty array to accept the new quotes
+let newQuotes = []; // Initializing an empty array to accept the new quotes
+
+// Function to add new quotes to the newQuotes array
+function addNewQuotes() {
+    for (let i = 0; i < 2; i++) { // Loop twice to add two new quotes
+        newQuotes.push(moreQuotes());
+    }
+    console.log(newQuotes);
+}
+
 
 
 
@@ -64,6 +89,7 @@ const newQuotesObject = quoteManager.reduce((mergequotes, manager) => {
 
 // ****UPDATING A QUOTE CATEGORY FROM QUOTES****
 let updateQuote = function(){
+    let authorName = prompt("Enter the name of the author you will like to update: ")
     let updateCategory = prompt("How would you categorize this quote?");
     let keys = Object.keys(newQuotesObject);
     for (let i = 0; i < keys.length; i++) {
@@ -81,8 +107,8 @@ let updateQuote = function(){
 // QUOTE LIST ZONE:
 // ***updating QuoteList***
 let updateQuoteArray = function(){
-    let newName = prompt("Enter your prefered name: "); //user will enter their prefered name to change the existing name
     let selectedId = Number(prompt("Enter the id number(0-4) of the quote name you wish to change: "))// let user enter the id number they want to delete from
+    let newName = prompt("Enter your prefered name: "); //user will enter their prefered name to change the existing name
     quoteManager.forEach(quoteList =>{
         if (quoteList.id === selectedId){
             quoteList.name = newName;
@@ -91,7 +117,7 @@ let updateQuoteArray = function(){
 }
 
 // // ***deleting QuoteList***
-let deleteQuoteList = function(id) {
+let deleteQuoteList = function() {
     id = prompt("Enter the id number of the quoteList you wish to delete (0-4): ")
     if (id >= 0 && id < quoteManager.length) { // Check if the id is within the valid range
         quoteManager.splice(id, 1); // Remove 1 element at index id
@@ -103,10 +129,12 @@ let deleteQuoteList = function(id) {
 // // ***Creating QuoteList***
 let createQuoteList = function(){
     let id = quoteManager.length + 1;
+    let name = prompt("Enter the name for your quoteList: ")
     quoteManager.push({
         id,
-        name: "New Set of Quotes", 
-        quotes: newQuotes // Add the new quotes to the quotes property
+        name, 
+        quotes: [moreQuotes(),
+            moreQuotes()] // Add the new quotes to the quotes property
     });
 }
 
@@ -143,11 +171,7 @@ while(viewQuoteManager){
     if (yesAddQuote === "no".toLowerCase()){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (yesAddQuote === "yes"){
-        newQuotes; //Prompt the user for new quotes and add them to the newQuotes array
-        for (let i = 0; i < 2; i++) {
-            newQuotes.push(moreQuotes())
-        }
-        console.log(newQuotes);
+        addNewQuotes();
     }
 
     // updating quotes
@@ -156,6 +180,7 @@ while(viewQuoteManager){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (yesUpdateQuote === "yes"){
         updateQuote();
+        console.log(newQuotesObject)
     }
 
     // deleting quotes
@@ -164,6 +189,7 @@ while(viewQuoteManager){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (yesdeleteQuote === "yes"){
         deleteQuote();
+        console.log(newQuotesObject)
     }
 
 
@@ -187,6 +213,7 @@ while(viewQuoteManager){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (userInputUpdate === "yes"){
         updateQuoteArray();
+        console.log(quoteManager);
     }
 
     // deleting quoteList
@@ -194,8 +221,9 @@ while(viewQuoteManager){
     let userInputdelete = prompt("Would you like to give it a try, yes/no?: ")
     if (userInputdelete === "no".toLowerCase()){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
-    }else if (userInputUpdate === "yes"){
-        deleteQuoteList(id);
+    }else if (userInputdelete === "yes"){
+        deleteQuoteList();
+        console.log(quoteManager);
     }
 
     const quitQuoteManager = prompt("Do you want to quit viewing QuoteManager or continue viewing more quotes (enter q to quit/or c to continue)?: ").toLowerCase();
