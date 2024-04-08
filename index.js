@@ -1,58 +1,43 @@
 console.log('Starting point for Certification Project I')
 const prompt = require('prompt-sync')();
 let quoteManager = [
-    {id:0, name:"Inspirational Quotes", quotes:[{quote:"The only way to do great work is to love what you do.", author:"Steve Jobs", category:"inspirational"}, 
-                                                {quote:"Believe you can and you're halfway there.", author:"Theodore Roosevelt", category:"inspirational"}
+    {id:0, name:"Inspirational Quotes", quotes:[{id:0, quote:"The only way to do great work is to love what you do.", author:"Steve Jobs", category:"inspirational"}, 
+                                                {id:1, quote:"Believe you can and you're halfway there.", author:"Theodore Roosevelt", category:"inspirational"}
     ]},
-    {id:1, name:"Health and lifestyle Quotes", quotes:[{quote:"If you want to live a happy life, tie it to a goal, not to people or things.", 
+    {id:1, name:"Health and lifestyle Quotes", quotes:[{id:2, quote:"If you want to live a happy life, tie it to a goal, not to people or things.", 
                                                                         author:"Albert Einstein", category:"health and lifesyle"},
-                                                        {quote:"Sufficient sleep, exercise, healthy food, friendship, and peace of mind are necessities, not luxuries.", author:"Mark Halperin", 
+                                                        {id:3, quote:"Sufficient sleep, exercise, healthy food, friendship, and peace of mind are necessities, not luxuries.", author:"Mark Halperin", 
                                                         category:"health and lifesyle"},
-                                                        {quote:"Take care of your body. Its the only place you have to live.", author:"Jim Rohn", category:"health and lifesyle"}
+                                                        {id:4, quote:"Take care of your body. Its the only place you have to live.", author:"Jim Rohn", category:"health and lifesyle"}
 
     ]},
-    {id:2, name:"Fate Quotes", quotes:[{quote:"Allah does not burden a soul beyond that it can bear", author:"Quran 2:286", category:"fate"},
-                                        {quote:"And whoever relies upon Allah, then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has already set for everything a decreed extent", 
+    {id:2, name:"Fate Quotes", quotes:[{id:5, quote:"Allah does not burden a soul beyond that it can bear", author:"Quran 2:286", category:"fate"},
+                                        {id:6, quote:"And whoever relies upon Allah, then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has already set for everything a decreed extent", 
                                         author:"Quran 65:3", category:"fate"},
-                                        {quote:"He who does not show mercy to others will not be shown mercy", author:"Prophet Muhammad, peace be upon him", category:"fate"}
+                                        {id:7, quote:"He who does not show mercy to others will not be shown mercy", author:"Prophet Muhammad, peace be upon him", category:"fate"}
 
     ]},
-    {id:3, name:"Influence Quotes", quotes:[{quote:"Example is not the main thing in influencing others. It is the only thing", author:"Albert Schweitzer", category:"influence"},
-                                        {quote:"Children are more influenced by sermons you act than by sermons you preach.", author:"David McKay", category:"influence"},
-                                        {quote:"If you try to influence everyone, you wont influence anyone.", author:"Josh Steimle", category:"influence"}
+    {id:3, name:"Influence Quotes", quotes:[{id:8, quote:"Example is not the main thing in influencing others. It is the only thing", author:"Albert Schweitzer", category:"influence"},
+                                        {id:9, quote:"Children are more influenced by sermons you act than by sermons you preach.", author:"David McKay", category:"influence"},
+                                        {id:10, quote:"If you try to influence everyone, you wont influence anyone.", author:"Josh Steimle", category:"influence"}
     ]},
-    {id:4, name:"Tech Quotes", quotes:[{quote:"The technology you use impresses no one. The experience you create with it is everything.", author:"Sean Gerety", category:"tech"},
-                                        {quote:"The advance of technology is based on making it fit in so that you dont really even notice it, so its part of everyday life.", author:"Bill Gates",
+    {id:4, name:"Tech Quotes", quotes:[{id:11, quote:"The technology you use impresses no one. The experience you create with it is everything.", author:"Sean Gerety", category:"tech"},
+                                        {id:12, quote:"The advance of technology is based on making it fit in so that you dont really even notice it, so its part of everyday life.", author:"Bill Gates",
                                          category:"tech"},
-                                        {quote:"Technology is best when it brings people together.", author:"Matt Mullenweg", category:"tech"}
+                                        {id:13, quote:"Technology is best when it brings people together.", author:"Matt Mullenweg", category:"tech"}
 ]}   
 ]
 
 
 // // #######################################################################################
 // //QUOTE ZONE:
-// // ****ADDING A QUOTE TO QUOTES****
-// let moreQuotes = function (){
-//     let quote = prompt("Enter the quote: "); //this takes the quote
-//     let author = prompt("Enter the author: "); //this takes the author of the quote
-//     let category = prompt("Enter the category: "); //this takes the category
-//     return { quote, author, category };
-// }
-
-// let newQuotes = [] //initializing an empty array to accept the new quotes
-// newQuotes = function() {
-//     newQuotes; //Prompt the user for new quotes and add them to the newQuotes array
-//     for (let i = 0; i < 2; i++) {
-//         newQuotes.push(moreQuotes())
-//     }
-//     console.log(newQuotes);
-// }
-
+// ****ADDING A QUOTE TO QUOTES****
 let moreQuotes = function (){
+    let id = quoteManager[0].quotes.length + 1;
     let quote = prompt("Enter the quote: ");
     let author = prompt("Enter the author: ");
     let category = prompt("Enter the category: ");
-    return { quote, author, category };
+    return { id, quote, author, category };
 }
 
 let newQuotes = []; // Initializing an empty array to accept the new quotes
@@ -69,45 +54,46 @@ function addNewQuotes() {
 
 
 
-// ****DELETING A QUOTE FROM QUOTES****
-// reduce function to reduce the quotes array of objects into a single object:
-const newQuotesObject = quoteManager.reduce((mergequotes, manager) => {
-    manager.quotes.forEach(eachquote => {
-        mergequotes[eachquote.author] = {
-            quote: eachquote.quote,
-            category: eachquote.category
-        };
-    });
-    return mergequotes;
-}, {});
- let deleteQuote = function(){
-    let authorName = prompt("Enter the name of the author you will like to delete: ")
-    delete newQuotesObject[authorName];
 
- }
+
+// ****DELETING A QUOTE FROM QUOTES****
+let delQuote = function() {
+    let selectedId = Number(prompt("Enter the id of the quote you would like to delete (0-13): "));
+    quoteManager.forEach(manager => {
+        manager.quotes = manager.quotes.filter(quote => quote.id !== selectedId);
+    });
+    return quoteManager;
+};
+
+
+
+
 
 
 // ****UPDATING A QUOTE CATEGORY FROM QUOTES****
-let updateQuote = function(){
-    let authorName = prompt("Enter the name of the author you will like to update: ")
-    let updateCategory = prompt("How would you categorize this quote?");
-    let keys = Object.keys(newQuotesObject);
-    for (let i = 0; i < keys.length; i++) {
-    let author = keys[i];
-    if (author === authorName) {
-        newQuotesObject[author].category = updateCategory;
-        break; // 
-    }
-}
-}
+let updateQuote = function() {
+    let selectedId = Number(prompt("Enter the id of the quote you would like to update (0-13): "));
+    let updateCategory = prompt("How would you categorize this quote? ");
+    
+    quoteManager.forEach(manager => {
+        manager.quotes.forEach(quote => {
+            if (quote.id === selectedId) {
+                quote.category = updateCategory;
+            }
+        });
+    });
+    
+    return quoteManager;
+};
 
 
 
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-// QUOTE LIST ZONE:
-// ***updating QuoteList***
+
+// // // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// // // QUOTE LIST ZONE:
+// // // ***updating QuoteList***
 let updateQuoteArray = function(){
-    let selectedId = Number(prompt("Enter the id number(0-4) of the quote name you wish to change: "))// let user enter the id number they want to delete from
+    let selectedId = Number(prompt("Enter the id number(0, 1, 2...) of the quote name you wish to change: "))// let user enter the id number they want to delete from
     let newName = prompt("Enter your prefered name: "); //user will enter their prefered name to change the existing name
     quoteManager.forEach(quoteList =>{
         if (quoteList.id === selectedId){
@@ -116,15 +102,15 @@ let updateQuoteArray = function(){
 })
 }
 
-// // ***deleting QuoteList***
+// // // ***deleting QuoteList***
 let deleteQuoteList = function() {
-    id = prompt("Enter the id number of the quoteList you wish to delete (0-4): ")
-    if (id >= 0 && id < quoteManager.length) { // Check if the id is within the valid range
-        quoteManager.splice(id, 1); // Remove 1 element at index id
-    } else {
-        console.log("Invalid id specified."); // reminds the user to enter correct id
-    }
-}
+    let id = Number(prompt("Enter the id number of the quoteList you wish to delete (0, 1,2...): "));
+    quoteManager = quoteManager.filter(manager => manager.id !== id);
+    return quoteManager;
+};
+
+
+
 
 // // ***Creating QuoteList***
 let createQuoteList = function(){
@@ -134,36 +120,27 @@ let createQuoteList = function(){
         id,
         name, 
         quotes: [moreQuotes(),
-            moreQuotes()] // Add the new quotes to the quotes property
+                moreQuotes()] // Add the new quotes to the quotes property
     });
 }
 
 
 
-// ****DISPLAYING SELECTED QUOTE**** //remember to rewrite this code efficiently after the code test
-let display = function(){
-    let userInput = prompt("Enter your prefered category of quotes (inspirational, health and lifestyle, fate, influence or tech): ");
-    if (userInput == "inspirational".toLowerCase()){
-        console.log(quoteManager[0]);
-        }else if(userInput == "health and lifestyle".toLowerCase()){
-        console.log(quoteManager[1]);
-        }else if(userInput == "fate".toLowerCase()){
-        console.log(quoteManager[2]);
-        }else if(userInput == "influence".toLowerCase()){
-        console.log(quoteManager[3])
-        }else if (userInput == "tech".toLowerCase()){
-        console.log(quoteManager[4]);
-     }
-}
+// // ****DISPLAYING SELECTED QUOTE**** 
+let display = quoteManager.filter(function(quote){
+    let selectedId = Number(prompt("Enter the id of the quote you would like to display (0-Inspirational Quotes; 1-Health and lifestyle Quotes; 2-Fate Quotes; 3-Influence Quotes; 4-Tech Quotes): "));
+    if (quote.id === selectedId) {
+        console.log(JSON.stringify(quote,null, 4));
+    }
+});
 
 
-// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+// // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 let viewQuoteManager = true;
 while(viewQuoteManager){
     // displaying quoteList and individual quotes
-    console.log("Welcome to Quote Manager")
-    console.log(quoteManager); 
-    display();
+    display;
 
     console.log("Do you want to explore more of QuoteManager, how about adding/updating/deleting an entire quote you probably do not like?: ")
     // Adding more quotes
@@ -179,8 +156,7 @@ while(viewQuoteManager){
     if (yesUpdateQuote === "no".toLowerCase()){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (yesUpdateQuote === "yes"){
-        updateQuote();
-        console.log(newQuotesObject)
+        console.log(JSON.stringify(updateQuote()));
     }
 
     // deleting quotes
@@ -188,8 +164,8 @@ while(viewQuoteManager){
     if (yesdeleteQuote === "no".toLowerCase()){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (yesdeleteQuote === "yes"){
-        deleteQuote();
-        console.log(newQuotesObject)
+        let delQuoteManager = delQuote();
+        console.log(JSON.stringify(delQuoteManager)); // this shows quoteManager without the deleted quote  
     }
 
 
@@ -202,7 +178,7 @@ while(viewQuoteManager){
     if (newUserInput === "no".toLowerCase()){
         console.log("Well noted. Feel free to comeback and add to quoteList if you change your mind.")
     }else if (newUserInput === "yes"){
-        createQuoteList();
+        createQuoteList();  
         console.log(quoteManager);
     }
 
@@ -222,8 +198,7 @@ while(viewQuoteManager){
     if (userInputdelete === "no".toLowerCase()){
         console.log("Well noted. Feel free to comeback and try it if you change your mind.")
     }else if (userInputdelete === "yes"){
-        deleteQuoteList();
-        console.log(quoteManager);
+        console.log(JSON.stringify(deleteQuoteList()));
     }
 
     const quitQuoteManager = prompt("Do you want to quit viewing QuoteManager or continue viewing more quotes (enter q to quit/or c to continue)?: ").toLowerCase();
@@ -235,36 +210,42 @@ while(viewQuoteManager){
     }
 }
 
+
+
+
+
+
 const fs = require('fs');
 
-
-// Convert new array to JSON string
+// / Convert new array to JSON string
 let jsonData = JSON.stringify(newQuotes, null, 2); 
+let preferedName = prompt("What name do you want to save this with? ");
 
-// Write JSON string to a file
-fs.writeFile('newQuotes.json', jsonData, 'utf8', (err) => {
+// Write JSON string to a file with the specified name
+fs.writeFile(`${preferedName}.json`, jsonData, 'utf8', (err) => {
     if (err) {
         console.error('An error occurred while writing to the file:', err);
     } else {
-        console.log('Data has been saved to newQuotes.json');
+        console.log(`Data has been saved to ${preferedName}.json`);
     }
 });
 
 
 // Load JSON file
-fs.readFile('newQuotes.json', 'utf8', (err, data) => {
+fs.readFile(`${preferedName}.json`, 'utf8', (err, data) => {
     if (err) {
         console.error('An error occurred while reading the file:', err);
     } else {
         try {
             // Parse JSON data into a JavaScript object
-            const quoteManager = JSON.parse(data);
+            quoteManager.push(JSON.parse(data));
             console.log('Data loaded successfully:', newQuotes);
         } catch (parseError) {
             console.error('An error occurred while parsing JSON:', parseError);
         }
     }
 });
+
 
 
 
